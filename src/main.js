@@ -11,6 +11,7 @@ class GoogleCalendarInstance extends InstanceBase {
 		this.accessToken = null
 		this.tokenExpiry = 0
 		this.pollInterval = null
+		this.retryTimeout = null
 		this.nextEvent = null
 	}
 
@@ -21,14 +22,29 @@ class GoogleCalendarInstance extends InstanceBase {
 		updateFeedbacks(this)
 		updateVariables(this)
 
-		await this.refreshAccessToken()
-		this.startPolling()
+		const refreshed = await this.refreshAccessToken()
+		if (refreshed) {
+			this.startPolling()
+		} else {
+			// Retry token refresh after 30 seconds if it failed on init
+			this.log('warn', 'Initial token refresh failed, will retry in 30 seconds')
+			this.retryTimeout = setTimeout(async () => {
+				const retryRefreshed = await this.refreshAccessToken()
+				if (retryRefreshed) {
+					this.startPolling()
+				}
+			}, 30000)
+		}
 	}
 
 	async destroy() {
 		if (this.pollInterval) {
 			clearInterval(this.pollInterval)
 			this.pollInterval = null
+		}
+		if (this.retryTimeout) {
+			clearTimeout(this.retryTimeout)
+			this.retryTimeout = null
 		}
 	}
 
