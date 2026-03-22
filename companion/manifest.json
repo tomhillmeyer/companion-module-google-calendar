@@ -1,17 +1,17 @@
 {
 	"$schema": "../node_modules/@companion-module/base/assets/manifest.schema.json",
-	"id": "your-module-name",
-	"name": "your-module-name",
-	"shortname": "module-shortname",
-	"description": "A short one line description of your module",
-	"version": "0.0.0",
+	"id": "google-calendar",
+	"name": "google-calendar",
+	"shortname": "google-calendar",
+	"description": "A Google Calendar module for Bitfocus Companion",
+	"version": "1.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-your-module-name.git",
-	"bugs": "https://github.com/bitfocus/companion-module-your-module-name/issues",
+	"repository": "git+https://github.com/bitfocus/companion-module-google-calendar.git",
+	"bugs": "https://github.com/bitfocus/companion-module-google-calendar/issues",
 	"maintainers": [
 		{
-			"name": "Your name",
-			"email": "Your email"
+			"name": "Tom Hillmeyer",
+			"email": "thillmeyer@gmail.com"
 		}
 	],
 	"runtime": {
@@ -21,7 +21,9 @@
 		"entrypoint": "../src/main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "Your company",
-	"products": ["Your product"],
+	"manufacturer": "Google",
+	"products": [
+		"Calendar"
+	],
 	"keywords": []
 }
